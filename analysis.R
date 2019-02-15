@@ -1,13 +1,13 @@
 # Analysis script: compute values and create graphics of interest
-library("dplyr")
-library("ggplot2")
-library("lubridate")
-library("tidyr")
-library("ggmap")
+#install.packages("lubridate")
+#install.packages("tidyr")
+#install.packages("ggmap")
 
-install.packages("lubridate")
-install.packages("tidyr")
-install.packages("ggmap")
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(ggmap)
 
 # Load in your data
 evictions <- read.csv("data/Eviction_Notices.csv", 
@@ -56,7 +56,6 @@ evictions_2017 <- evictions %>%
     long = as.numeric(gsub("\\)", "", long)) # remove closing parentheses
   ) 
 nrow(evictions_2017)
-View(evictions_2017)
 
 
 # Create a maptile background
@@ -77,3 +76,4 @@ evictions_plot <- base_plot +
   labs(title = "Evictions in San Francisco, 2017") +
   theme(plot.margin = margin(.3, 0, 0, 0, "cm")) # adjust spacing around the map
 evictions_plot
+
