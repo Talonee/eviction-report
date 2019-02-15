@@ -26,8 +26,8 @@ by_zip <- evictions %>%
   count() %>% # equivalent to summarize() # of rows for each group, results in zipcode + n 
               # (new column n that represents # of rows)
   arrange(-n) %>% # sort the column n
-  ungroup() %>% 
-  top_n(10, wt=n)
+  ungroup() %>% # sometimes need to declare this, else the following argument won't work
+  top_n(10, wt=n) # display only 10 rows, weighted (wt) by the column n (sort by col n)
 by_zip
 
 # Create a plot of the number of evictions each month in the dataset
