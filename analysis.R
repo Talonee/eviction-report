@@ -34,7 +34,8 @@ by_zip
 as.Date("10/6/17", format = "%m/%d/%y")
 by_month <- evictions %>% 
   mutate(date = as.Date(File.Date, format = "%m/%d/%y")) %>% 
-  mutate(month = floor_date(date, unit = "month")) %>% 
+  mutate(month = floor_date(date, unit = "month")) %>% # push all values to the origin
+                      # (push by month) Nov-07 -> Nov-01; Oct-23 -> Oct-01; Sept-31 -> Sept-01
   group_by(month) %>% 
   count()
 by_month
