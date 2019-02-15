@@ -23,8 +23,9 @@ num_features <- ncol(evictions); num_features
 # Create a table (data frame) of evictions by zip code (sort descending)
 by_zip <- evictions %>% 
   group_by(Eviction.Notice.Source.Zipcode) %>% 
-  count() %>% 
-  arrange(-n) %>% # sort last column
+  count() %>% # equivalent to summarize() # of rows for each group, results in zipcode + n 
+              # (new column n that represents # of rows)
+  arrange(-n) %>% # sort the column n
   ungroup() %>% 
   top_n(10, wt=n)
 by_zip
