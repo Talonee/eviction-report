@@ -23,17 +23,19 @@ num_features <- ncol(evictions); num_features
 # Create a table (data frame) of evictions by zip code (sort descending)
 by_zip <- evictions %>% 
   group_by(Eviction.Notice.Source.Zipcode) %>% 
-  count() %>% 
-  arrange(-n) %>% # sort last column
-  ungroup() %>% 
-  top_n(10, wt=n)
+  count() %>% # equivalent to summarize() # of rows for each group, results in zipcode + n 
+              # (new column n that represents # of rows)
+  arrange(-n) %>% # sort the column n
+  ungroup() %>% # sometimes need to declare this, else the following argument won't work
+  top_n(10, wt=n) # display only 10 rows, weighted (wt) by the column n (sort by col n)
 by_zip
 
 # Create a plot of the number of evictions each month in the dataset
 as.Date("10/6/17", format = "%m/%d/%y")
 by_month <- evictions %>% 
   mutate(date = as.Date(File.Date, format = "%m/%d/%y")) %>% 
-  mutate(month = floor_date(date, unit = "month")) %>% 
+  mutate(month = floor_date(date, unit = "month")) %>% # push all values to the origin
+                      # (push by month) Nov-07 -> Nov-01; Oct-23 -> Oct-01; Sept-31 -> Sept-01
   group_by(month) %>% 
   count()
 by_month
